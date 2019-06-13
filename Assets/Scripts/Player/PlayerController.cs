@@ -4,27 +4,28 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public CharacterController controller;
+    public CharacterClass character;
+    public Rigidbody rb;
+    private Vector3 forward;
 
-
-    public void moveXAxis(float value)
+    public void OnDrawGizmos()
     {
-        Vector3 movement = new Vector3(Common.timedValue(value), controller.velocity.y, controller.velocity.z);
-        this.moveCharacter(movement);
+        Gizmos.DrawWireSphere(this.forward, 0.5f);
     }
 
-    public void moveZAxis(float value)
+    public void moveCharacter(Vector3 speed)
     {
-        Vector3 movement = new Vector3(controller.velocity.x, controller.velocity.y, Common.timedValue(value));
-        this.moveCharacter(movement);
+        Vector3 finalSpeed = new Vector3(speed.x * character.moveSpeed, 0f, speed.z * character.moveSpeed);
+        this.rb.velocity = finalSpeed;
     }
-    private void moveCharacter(Vector3 speed)
-    {
-        controller.SimpleMove(speed);
+
+    public void updateDirection(Vector3 direction) {
+        this.forward = (this.transform.position + direction);
+        this.transform.LookAt(this.forward,Vector3.up);
     }
 
     private void Reset()
     {
-        this.controller = GetComponent<CharacterController>();
+        this.rb = GetComponent<Rigidbody>();
     }
 }

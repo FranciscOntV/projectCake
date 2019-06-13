@@ -5,42 +5,20 @@ using UnityEngine;
 public class InputManager : MonoBehaviour
 {
     [Range(1f, 3f)]
-    public float moveSpeed = 1f;
     public PlayerController controller;
-
-    private const float movementMultiplier = 50f;
+    private float moveX = 0f;
+    private float moveZ = 0f;
 
     void Update()
     {
-        // placeholder until input sources get defined
-        // Move up
-        if (Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S)) {
-            controller.moveZAxis(moveSpeed * movementMultiplier);
+        moveX = Input.GetAxis("Horizontal");
+        moveZ = Input.GetAxis("Vertical"); 
+        Vector3 movement = new Vector3(moveX, 0f, moveZ);
+        if (moveZ != 0f || moveX != 0f) {
+            controller.updateDirection(movement);
         }
-
-        // Move down
-        else if (Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.W)) {
-            controller.moveZAxis(moveSpeed * -1f * movementMultiplier);
-        }
-        else{
-            controller.moveZAxis(0f);
-        }
-
-        // placeholder until input sources get defined
-        // Move left
-        if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D)) {
-            controller.moveXAxis(moveSpeed * -1f *  movementMultiplier);
-        }
-
-        // Move right
-        else if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A)) {
-            controller.moveXAxis(moveSpeed * movementMultiplier);
-        }
-        else{
-            controller.moveXAxis(0f);
-        }
+        controller.moveCharacter(movement);
     }
-    
     private void Reset()
     {
         this.controller = GetComponent<PlayerController>();
