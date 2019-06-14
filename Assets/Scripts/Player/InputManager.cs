@@ -11,6 +11,17 @@ public class InputManager : MonoBehaviour
 
     void Update()
     {
+        this.checkMovement();
+        this.checkInteract();
+    }
+
+    public void checkInteract() {
+        if (Input.GetButtonDown("Jump")) {
+            Debug.Log("interact");
+            controller.interact();
+        }
+    }
+    public void checkMovement() {
         moveX = Input.GetAxis("Horizontal");
         moveZ = Input.GetAxis("Vertical"); 
         Vector3 movement = new Vector3(moveX, 0f, moveZ);

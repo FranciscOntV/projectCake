@@ -7,4 +7,12 @@ public static class Common
     public static float timedValue(float value) {
         return (Time.deltaTime * value);
     } 
+
+    public static string grabableTag = "grabable";
+    public static string usableTag = "usable";
+
+    public static Vector3 grabbedPosition = new Vector3(0f, 1.5f, 0f);
+    public static Vector3 dropPosition = new Vector3(0f, 1f, 0f);
+    public static float throwForce = 3f;
+    public static float grabSpeed = 5f;
 }
