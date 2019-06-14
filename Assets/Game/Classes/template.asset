@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5905af5839bb64ff1bc94c82abc45169, type: 3}
   m_Name: template
   m_EditorClassIdentifier: 
-  moveSpeed: 1.8
+  moveSpeed: 3
   runSpeed: 2.5
   carrySpeed: 1
   initialHealth: 10

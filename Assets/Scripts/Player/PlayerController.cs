@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public CharacterClass character;
+    public StatusManager stats;
     public Rigidbody rb;
     private Vector3 forward;
     private Vector3 interactPosition;
@@ -19,6 +19,11 @@ public class PlayerController : MonoBehaviour
         // Draw 'Interactable Radius' position (red sphere)
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(this.interactPosition, interactRadius);
+    }
+
+    void Awake()
+    {
+        this.stats.initialize();
     }
     private void Update()
     {
@@ -73,7 +78,7 @@ public class PlayerController : MonoBehaviour
     // Move the character towards joystick position
     public void moveCharacter(Vector3 speed)
     {
-        Vector3 finalSpeed = new Vector3(speed.x * character.moveSpeed, 0f, speed.z * character.moveSpeed);
+        Vector3 finalSpeed = new Vector3(speed.x * stats.getWalkSpeed(), 0f, speed.z * stats.getWalkSpeed());
         this.rb.velocity = finalSpeed;
     }
 
@@ -99,6 +104,7 @@ public class PlayerController : MonoBehaviour
     // triggered when the component is reset
     private void Reset()
     {
+        this.stats = GetComponent<StatusManager>();
         this.rb = GetComponent<Rigidbody>();
     }
 }
