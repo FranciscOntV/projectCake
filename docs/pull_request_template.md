@@ -1,7 +1,7 @@
 ## What this PR does
 - [x] Be a template
 
-## What this PR doesn't
+## What this PR doesn't do
 - Save the world
 
 ## Something else?
