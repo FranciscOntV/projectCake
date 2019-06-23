@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO: Scrap this class if no `classes` are implemented.
 [CreateAssetMenu(fileName = "class", menuName = "Game/Class", order = 1)]
 public class CharacterClass : ScriptableObject
 {

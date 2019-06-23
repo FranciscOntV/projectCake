@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    [Range(1f, 3f)]
     public PlayerController controller;
-    private float moveX = 0f;
-    private float moveZ = 0f;
+    private Vector3 movement;
+    private bool running = false;
 
     void Update()
     {
@@ -15,23 +14,50 @@ public class InputManager : MonoBehaviour
         this.checkInteract();
     }
 
-    public void checkInteract() {
-        if (Input.GetButtonDown("Jump")) {
-            Debug.Log("interact");
+    /// <summary>
+    /// checks for interactable objects.
+    /// </summary>
+    public void checkInteract()
+    {
+        if (isPressingInteractButton())
+        {
             controller.interact();
         }
     }
-    public void checkMovement() {
-        moveX = Input.GetAxis("Horizontal");
-        moveZ = Input.GetAxis("Vertical"); 
-        Vector3 movement = new Vector3(moveX, 0f, moveZ);
-        if (moveZ != 0f || moveX != 0f) {
+
+    /// <summary>
+    /// Checks if the character should move.
+    /// </summary>
+    public void checkMovement()
+    {
+        running = isPressingRunButton();
+        movement = getAxisValues();
+        if (movement.z != 0f || movement.x != 0f)
+        {
             controller.updateDirection(movement);
         }
-        controller.moveCharacter(movement);
+        controller.moveCharacter(movement, running);
     }
+
     private void Reset()
     {
         this.controller = GetComponent<PlayerController>();
+    }
+
+    // This section must be edited if moving to the new input system
+    // https://forum.unity.com/threads/input-system-update.508660/
+    private bool isPressingRunButton()
+    {
+        return Input.GetButton("Fire3");
+    }
+
+    private bool isPressingInteractButton()
+    {
+        return Input.GetButtonDown("Jump");
+    }
+
+    private Vector3 getAxisValues()
+    {
+        return new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
     }
 }
