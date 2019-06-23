@@ -8,13 +8,10 @@ public class PlayerHud : MonoBehaviour
     public Camera cam;
     public TMP_Text hpIndicator;
     public StatusManager stats;
-    private int[] Hp;
 
-    // Update is called once per frame
     void Update()
     {
-        Hp = stats.getHp();
-        hpIndicator.text = Hp[0].ToString() + "/" + Hp[1].ToString();
+        hpIndicator.text = stats.currentHP.ToString() + "/" + stats.maxHP.ToString();
         this.transform.position = RectTransformUtility.WorldToScreenPoint(cam, stats.gameObject.transform.position + Vector3.down);
     }
 }

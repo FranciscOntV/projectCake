@@ -4,7 +4,14 @@ using UnityEngine;
 
 public static class Common
 {
-    public static float timedValue(float value) {
+    /// <summary>
+    /// Multiplies a value by Time.deltaTime.
+    /// </summary>
+    /// <param name="value">The velue to multiply, leave empty to get deltaTime.</param>
+    /// <returns>
+    /// float the value multiplied.
+    /// </returns>
+    public static float timedValue(float value = 1f) {
         return (Time.deltaTime * value);
     } 
 

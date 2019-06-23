@@ -6,6 +6,9 @@ public class GrabableItem : MonoBehaviour
 {
     private Rigidbody rb;
     private BoxCollider coll;
+    private CapsuleCollider ignoreTarget;
+    private float ignoreTimer = 0f;
+    private bool ignoreCollision = false;
 
     void Awake()
     {
@@ -15,34 +18,81 @@ public class GrabableItem : MonoBehaviour
 
     public void Update()
     {
-        if (this.isGrabbed())
+        if (isGrabbed())
         {
-            this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, Common.grabbedPosition, Common.timedValue(Common.grabSpeed));
+            transform.localPosition = Vector3.MoveTowards(transform.localPosition, Common.grabbedPosition, Common.timedValue(Common.grabSpeed));
+        }
+        else
+        {
+            updateIgnoreCollisionTimer();
         }
     }
+
+    /// <summary>
+    /// Updates the collision ignore timer to avoid falling over another character.
+    /// </summary>
+    private void updateIgnoreCollisionTimer()
+    {
+        if (ignoreTimer > 0f)
+        {
+            ignoreCollision = true;
+            ignoreTimer -= Common.timedValue();
+            Physics.IgnoreCollision(coll, ignoreTarget, ignoreCollision);
+        }
+        else
+        {
+            if (ignoreCollision)
+            {
+                ignoreCollision = false;
+                Physics.IgnoreCollision(coll, ignoreTarget, ignoreCollision);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Actions to execute when grabbed.
+    /// </summary>
     public void grab(Transform interactor)
     {
-        this.coll.enabled = false;
-        this.transform.SetParent(interactor);
-        this.rb.useGravity = false;
+        // TODO: change type if other collider is used for characters.
+        ignoreTarget = interactor.GetComponent<CapsuleCollider>();
+        coll.enabled = false;
+        transform.SetParent(interactor);
+        rb.useGravity = false;
     }
 
+    /// <summary>
+    /// Actions to execute when dropped.
+    /// </summary>
     public void drop(Vector3 direction)
     {
-        this.coll.enabled = true;
-        this.transform.eulerAngles = this.transform.parent.eulerAngles;
-        this.transform.parent = null;
-        this.rb.useGravity = true;
-        this.rb.velocity= direction;
+        ignoreTimer = 0.5f;
+        coll.enabled = true;
+        transform.eulerAngles = transform.parent.eulerAngles;
+        transform.parent = null;
+        rb.useGravity = true;
+        rb.velocity = direction;
     }
 
+    /// <summary>
+    /// Determines if the object is already grabbed.
+    /// </summary>
+    /// <returns>
+    /// bool true if already grabbed, otherwise else.
+    /// </returns>
     public bool isGrabbed()
     {
-        return (this.transform.parent != null);
+        return (transform.parent != null);
     }
 
+    /// <summary>
+    /// Determines if the object can be grabbed.
+    /// </summary>
+    /// <returns>
+    /// bool true if can be grabbed, otherwise else.
+    /// </returns>
     public bool isGrabable()
     {
-        return (this.transform.parent == null);
+        return (transform.parent == null);
     }
 }

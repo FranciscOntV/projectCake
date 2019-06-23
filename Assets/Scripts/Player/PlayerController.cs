@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     private const float interactRadius = 0.8f;
     private GrabableItem grabbedItem;
 
+    /// For debugging purposes only.
     public void OnDrawGizmos()
     {
         // Draw 'Joystick' position (white sphere)
@@ -30,6 +31,10 @@ public class PlayerController : MonoBehaviour
         // Update interactable radius position
         this.interactPosition = this.transform.GetChild(0).position;
     }
+
+    /// <summary>
+    /// Triggers an interaction in the interaction radius.
+    /// </summary>
     public void interact()
     {
         // check for every object in interactable radius
@@ -75,27 +80,44 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // Move the character towards joystick position
-    public void moveCharacter(Vector3 speed)
+    /// <summary>
+    /// Move the character towards joystick position.
+    /// </summary>
+    /// <param name="speed">Speed and direction of the movement.</param>
+    /// <param name="running">Is Running?.</param>
+    public void moveCharacter(Vector3 speed, bool running)
     {
-        Vector3 finalSpeed = new Vector3(speed.x * stats.getWalkSpeed(), 0f, speed.z * stats.getWalkSpeed());
+        float multiplier = stats.SPD * (running ? stats.runMultiplier : 1f);
+        Vector3 finalSpeed = new Vector3(speed.x * multiplier, 0f, speed.z * multiplier);
         this.rb.velocity = finalSpeed;
     }
 
-    // Update movement direction
+    /// <summary>
+    /// Updates the character facing direction.
+    /// </summary>
     public void updateDirection(Vector3 direction)
     {
         this.forward = (this.transform.position + direction);
         this.transform.LookAt(this.forward, Vector3.up);
     }
 
-    public Vector3 getThrowVector() {
-        float x = (this.interactPosition.x - this.transform.position.x) * Common.throwForce;
-        float z = (this.interactPosition.z - this.transform.position.z) * Common.throwForce;
-        return new Vector3(x,0f,z);
+    /// <summary>
+    /// Determines the direction and intensity to throw an item.
+    /// </summary>
+    /// <returns>
+    /// Vector3 throw direction.
+    /// </returns>
+    public Vector3 getThrowVector()
+    {
+        return new Vector3(transform.forward.x * Common.throwForce, 0f, transform.forward.z * Common.throwForce);
     }
 
-    // Check if playes has an item
+    /// <summary>
+    /// Determines if the player is holding an item.
+    /// </summary>
+    /// <returns>
+    /// bool true if holding something, otherwise else.
+    /// </returns>
     public bool hasGrabbedItem()
     {
         return (this.grabbedItem != null);
