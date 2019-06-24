@@ -2,23 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CameraTests.CameraFollow
-{
     public class SceneTestBehaviour : MonoBehaviour
     {
+        public GameEvent SceneCompletedEvent;
         public GameObject theCake;
         public Camera gameplayCamera;
         public GameObject[] path;
         public float speed = 1.0F;
 
+        public float timeScale = 1.0F;
+
         private Transform currentTarget = null;
         public float targetGizmoRadius = 5.0f;
-
-
 
         // Start is called before the first frame update
         void Start()
         {
+            Time.timeScale = timeScale;
             StartCoroutine(MoveCakeThruPath(this.path));
         }
 
@@ -67,6 +67,8 @@ namespace CameraTests.CameraFollow
                     )
                 );
             }
+
+            SceneCompletedEvent.Raise();
         }
     }
-}
+

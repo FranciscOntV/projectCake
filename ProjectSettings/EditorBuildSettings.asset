@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/SampleScene.unity
     guid: 05ff504e07993426a9a3f756f087369b
+  - enabled: 1
+    path: Assets/Scripts/UI/CameraFollow/Tests/CameraFollow_test.unity
+    guid: a7509743e7e234c4c8667bd43ca69caf
   m_configObjects: {}
