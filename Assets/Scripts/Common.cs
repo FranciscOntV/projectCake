@@ -16,6 +16,7 @@ public static class Common
     } 
 
     public static string grabableTag = "grabable";
+    public static string terrainTag = "terrain";
     public static string usableTag = "usable";
 
     public static Vector3 grabbedPosition = new Vector3(0f, 1.5f, 0f);
