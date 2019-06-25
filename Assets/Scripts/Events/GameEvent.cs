@@ -2,29 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
-public class GameEvent : MonoBehaviour
+namespace GameEvents
 {
-        private List<GameEventListener> listeners = new List<GameEventListener>();
+    [CreateAssetMenu]
+    public class GameEvent : ScriptableObject
+    {
+            private List<GameEventListener> listeners = new List<GameEventListener>();
 
-        public void Raise()
-        {
-            for (int idx = 0; idx < listeners.Count; idx++)
+            public void Raise()
             {
-                listeners[0].OnEventRaised();
+                for (int idx = 0; idx < listeners.Count; idx++)
+                {
+                    listeners[0].OnEventRaised();
+                }
             }
-        }
 
-        public void RegisterListener(GameEventListener listener)
-        {
-            if (!listeners.Contains(listener))
+            public void RegisterListener(GameEventListener listener)
             {
-                listeners.Add(listener);
+                if (!listeners.Contains(listener))
+                {
+                    listeners.Add(listener);
+                }
             }
-        }
 
-        public void UnregisterListener(GameEventListener listener)
-        {
-            listeners.Remove(listener);
-        }
+            public void UnregisterListener(GameEventListener listener)
+            {
+                listeners.Remove(listener);
+            }
+    }
 }

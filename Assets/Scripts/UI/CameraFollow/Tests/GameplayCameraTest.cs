@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
+using GameEvents;
 
 namespace Tests
 {
@@ -15,47 +16,33 @@ namespace Tests
             isSceneCompleted = true;
         }
 
-
-        // A Test behaves as an ordinary method
-        [Test]
-        public void GameplayCameraTestSimplePasses()
-        {
-            // Use the Assert class to test conditions
-        }
-
-        // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
-        // `yield return null;` to skip a frame.
         [UnityTest]
-        public IEnumerator GameplayCameraTestWithEnumeratorPasses()
+        public IEnumerator TestSceneSequenceCompletes()
         {
-            SceneManager.LoadScene("Assets/Tests/PlayMode Tests/Camera/CameraFollow/CameraFollow_test.unity");
+            SceneManager.LoadScene("Assets/Scripts/UI/CameraFollow/Tests/CameraFollow_test.unity");
             yield return null;
 
             SceneTestBehaviour sceneBehaviour = (SceneTestBehaviour)Object.FindObjectOfType(typeof(SceneTestBehaviour));
             Assert.True(sceneBehaviour != null);
-            sceneBehaviour.timeScale = 15;
 
-            GameEventListener eventListener = new GameEventListener();
+            // Set up for the sequence complete event
+            GameEventListener eventListener =  sceneBehaviour.gameObject.AddComponent<GameEventListener>();
+            eventListener.enabled = false;
             eventListener.Event = sceneBehaviour.SceneCompletedEvent;
             eventListener.Response = new UnityEvent();
             eventListener.Response.AddListener(SceneCompleted);
+            eventListener.enabled = true;
 
-
-            float startTime = Time.time;
-            float elapsedTime = 0;
-            while ( (elapsedTime = Time.time - startTime) < 5 || isSceneCompleted)
+            System.Diagnostics.Stopwatch stopWatch = new System.Diagnostics.Stopwatch();
+            stopWatch.Start();            
+            while (!isSceneCompleted && stopWatch.Elapsed.Seconds < 5)
             {
-                Debug.Log("Elapsed time: " + elapsedTime);
                 yield return null;
             }
+            stopWatch.Stop();
 
-            Assert.True(elapsedTime < 5);
-
-
-
-            // Use the Assert class to test conditions.
-            // Use yield to skip a frame.
-            // yield return null;
+            // Secuence must complete in less than 5 seconds
+            Assert.True(stopWatch.Elapsed.Seconds < 5);
         }
     }
 }

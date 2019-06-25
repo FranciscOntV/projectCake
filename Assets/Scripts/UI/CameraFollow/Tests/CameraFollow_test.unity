@@ -1320,6 +1320,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2492a8fdf5a8ebc4e9a55daf784f78c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SceneCompletedEvent: {fileID: 11400000, guid: 2746f7bd0f9667f44bf5cfd68ad1a55b,
+    type: 2}
   theCake: {fileID: 897143187}
   gameplayCamera: {fileID: 82814895}
   path:
@@ -1328,8 +1330,8 @@ MonoBehaviour:
   - {fileID: 1872282876}
   - {fileID: 1873025312}
   - {fileID: 502592228}
-  speed: 4
-  timeScale: 4
+  speed: 60
+  timeScale: 1
   targetGizmoRadius: 2
 --- !u!4 &1884949119
 Transform:

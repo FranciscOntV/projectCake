@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GameEvents;
 
     public class SceneTestBehaviour : MonoBehaviour
     {
@@ -50,7 +51,6 @@ using UnityEngine;
                 absRemainingDistance = journeyLength - distCovered;
                 yield return null;
             }
-
             yield return null;
         }
 
@@ -67,7 +67,6 @@ using UnityEngine;
                     )
                 );
             }
-
             SceneCompletedEvent.Raise();
         }
     }

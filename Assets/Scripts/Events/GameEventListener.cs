@@ -2,24 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using GameEvents;
 
-public class GameEventListener : MonoBehaviour
+namespace GameEvents
 {
-    public GameEvent Event;
-    public UnityEvent Response;
-
-    private void onEnable()
+    public class GameEventListener : MonoBehaviour
     {
-        Event.RegisterListener(this);
-    }
+        public GameEvent Event;
+        public UnityEvent Response;
 
-    private void onDisable()
-    {
-        Event.UnregisterListener(this);
-    }
+        private void OnEnable()
+        {
+            if (Event != null)
+            {
+                Event.RegisterListener(this);
+            }
+        }
 
-    public void OnEventRaised()
-    {
-        Response.Invoke();
+        private void OnDisable()
+        {
+            if (Event != null)
+            {
+                Event.UnregisterListener(this);
+            }
+        }
+
+        public void OnEventRaised()
+        {
+            if (Response != null)
+            {
+                Response.Invoke();
+            }
+        }
     }
 }
