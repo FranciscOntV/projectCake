@@ -885,7 +885,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 692498719}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11.25, y: 0, z: -2.84}
+  m_LocalPosition: {x: 11.25, y: 0, z: -2.8400002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 993188944}
@@ -903,6 +903,7 @@ GameObject:
   - component: {fileID: 897143190}
   - component: {fileID: 897143189}
   - component: {fileID: 897143188}
+  - component: {fileID: 897143192}
   m_Layer: 0
   m_Name: Cake
   m_TagString: Untagged
@@ -983,6 +984,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &897143192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 897143187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b6a2fbf0356bca48990851d87cbda32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 20
+  Path:
+  - {fileID: 1580528790}
+  - {fileID: 692498719}
+  - {fileID: 1872282876}
+  - {fileID: 1873025312}
+  - {fileID: 502592228}
+  OnPathFinished: {fileID: 11400000, guid: 321270d890b5a58408eff88301c27c35, type: 2}
+  targetGizmoRadius: 1
+  targetGizmoColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &993188943
 GameObject:
   m_ObjectHideFlags: 0
@@ -1224,8 +1247,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1580528790}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.46, y: 0, z: -9.53}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -7.46, y: 0, z: -9.529999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 993188944}
@@ -1255,7 +1278,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1872282876}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.07, y: 0, z: 7.17}
+  m_LocalPosition: {x: -7.0700006, y: 0, z: 7.17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 993188944}
@@ -1301,6 +1324,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1884949119}
   - component: {fileID: 1884949118}
+  - component: {fileID: 1884949120}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1320,19 +1344,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2492a8fdf5a8ebc4e9a55daf784f78c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SceneCompletedEvent: {fileID: 11400000, guid: 2746f7bd0f9667f44bf5cfd68ad1a55b,
-    type: 2}
-  theCake: {fileID: 897143187}
+  SceneCompletedEvent: {fileID: 0}
+  MainSecuenceCompletedListener: {fileID: 0}
   gameplayCamera: {fileID: 82814895}
-  path:
-  - {fileID: 1580528790}
-  - {fileID: 692498719}
-  - {fileID: 1872282876}
-  - {fileID: 1873025312}
-  - {fileID: 502592228}
-  speed: 60
   timeScale: 1
-  targetGizmoRadius: 2
 --- !u!4 &1884949119
 Transform:
   m_ObjectHideFlags: 0
@@ -1347,6 +1362,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.437}
+--- !u!114 &1884949120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1884949117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7342adbcffa00cf43bf202d62125d522, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 0}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 897143192}
+        m_MethodName: SendMessage
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1 &1907193485
 GameObject:
   m_ObjectHideFlags: 0
