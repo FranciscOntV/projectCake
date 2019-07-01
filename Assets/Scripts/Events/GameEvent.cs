@@ -4,10 +4,10 @@ using UnityEngine;
 
 namespace GameEvents
 {
-    [CreateAssetMenu]
+    [CreateAssetMenu(menuName = "Game Events/GameEvent", order = 1)]
     public class GameEvent : ScriptableObject
     {
-            private List<GameEventListener> listeners = new List<GameEventListener>();
+            protected List<GameEventListener> listeners = new List<GameEventListener>();
 
             public void Raise()
             {
