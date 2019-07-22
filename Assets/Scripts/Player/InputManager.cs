@@ -12,6 +12,7 @@ public class InputManager : MonoBehaviour
     {
         this.checkMovement();
         this.checkInteract();
+        this.checkJump();
     }
 
     /// <summary>
@@ -36,7 +37,21 @@ public class InputManager : MonoBehaviour
         {
             controller.updateDirection(movement);
         }
-        controller.moveCharacter(movement, running);
+        if (controller.canWalkForward())
+        {
+            controller.moveCharacter(movement, running);
+        }
+    }
+
+    /// <summary>
+    /// Checks if the character should jump.
+    /// </summary>
+    public void checkJump()
+    {
+        if (isPressingJumpButton() && controller.canJump())
+        {
+            controller.jump();
+        }
     }
 
     private void Reset()
@@ -54,6 +69,11 @@ public class InputManager : MonoBehaviour
     private bool isPressingInteractButton()
     {
         return Input.GetButtonDown("Jump");
+    }
+
+    private bool isPressingJumpButton()
+    {
+        return Input.GetKeyDown(KeyCode.J);
     }
 
     private Vector3 getAxisValues()
