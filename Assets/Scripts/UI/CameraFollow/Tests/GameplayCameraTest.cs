@@ -23,7 +23,7 @@ namespace Tests
             yield return null;
 
             SceneTestBehaviour sceneBehaviour = (SceneTestBehaviour)Object.FindObjectOfType(typeof(SceneTestBehaviour));
-            Assert.True(sceneBehaviour != null);
+            Assert.True(sceneBehaviour != null, "No SceneTestBehaviour found");
 
             // Set up for the sequence complete event
             GameEventListener eventListener =  sceneBehaviour.gameObject.AddComponent<GameEventListener>();
@@ -34,15 +34,26 @@ namespace Tests
             eventListener.enabled = true;
 
             System.Diagnostics.Stopwatch stopWatch = new System.Diagnostics.Stopwatch();
-            stopWatch.Start();            
+            stopWatch.Start();
+
+
+            Camera mainCamera = sceneBehaviour.gameplayCamera;
+            Assert.True(mainCamera != null, "Camera no set in test scene.");
+
+            Collider theCakeCollider = sceneBehaviour.cake;
             while (!isSceneCompleted && stopWatch.Elapsed.Seconds < 5)
             {
+                Plane[] cameraFrustum = GeometryUtility.CalculateFrustumPlanes(mainCamera);
+                Assert.True(// Cake always visible
+                    GeometryUtility.TestPlanesAABB(cameraFrustum, theCakeCollider.bounds),
+                    $"The Cake ({theCakeCollider.gameObject.name}) is not visible by camera ({mainCamera.name})."
+                );
                 yield return null;
             }
             stopWatch.Stop();
 
             // Secuence must complete in less than 5 seconds
-            Assert.True(stopWatch.Elapsed.Seconds < 5);
+            Assert.True(stopWatch.Elapsed.Seconds < 5, "Test timeout > 5 seconds.");
         }
     }
 }

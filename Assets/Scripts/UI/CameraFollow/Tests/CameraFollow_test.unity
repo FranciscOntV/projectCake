@@ -279,7 +279,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 82814893}
   m_LocalRotation: {x: 0.36874142, y: -0, z: -0, w: 0.92953205}
-  m_LocalPosition: {x: 0, y: 7.78, z: -10}
+  m_LocalPosition: {x: 0, y: 7.78, z: -24.37}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1347,6 +1347,8 @@ MonoBehaviour:
   SceneCompletedEvent: {fileID: 0}
   MainSecuenceCompletedListener: {fileID: 0}
   gameplayCamera: {fileID: 82814895}
+  players: []
+  cake: {fileID: 897143188}
   timeScale: 1
 --- !u!4 &1884949119
 Transform:

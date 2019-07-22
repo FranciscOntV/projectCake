@@ -8,6 +8,9 @@ using GameEvents;
         public GameEventListener MainSecuenceCompletedListener;
         public Camera gameplayCamera;
 
+        public Collider[] players;
+        public Collider cake;
+
         public float timeScale = 1.0F;
         void Start()
         {
